@@ -72,10 +72,10 @@ export function HeroSection() {
             <div className="relative z-10 flex items-center justify-between pb-4 border-b-2 border-white/20">
               <div className="flex items-center gap-2">
                 <Image
-                  src="/icon.png"
+                  src="/df-isotipo.webp"
                   alt="Despacha Fácil"
-                  width={20}
-                  height={20}
+                  width={24}
+                  height={16}
                   className="h-4 w-auto object-contain"
                 />
                 <span className="font-display text-xs text-brand-orange tracking-wider">

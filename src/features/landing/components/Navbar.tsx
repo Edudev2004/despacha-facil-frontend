@@ -15,10 +15,10 @@ export function Navbar() {
           className="flex items-center gap-2 hover:opacity-95 transition-opacity"
         >
           <Image
-            src="/logo.png"
+            src="/despacha-facil-logo.webp"
             alt="Despacha Fácil"
-            width={180}
-            height={40}
+            width={220}
+            height={28}
             className="h-8 sm:h-9 w-auto object-contain"
             priority
           />
