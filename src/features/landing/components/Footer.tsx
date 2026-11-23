@@ -25,10 +25,10 @@ export function Footer() {
           <div className="lg:col-span-6 space-y-4">
             <div>
               <Image
-                src="/logo.png"
+                src="/despacha-facil-logo.webp"
                 alt="Despacha Fácil"
-                width={160}
-                height={36}
+                width={200}
+                height={26}
                 className="h-9 w-auto object-contain bg-white px-3 py-1.5 rounded-[10px] border-2 border-ink inline-block mb-4 shadow-hard-sm"
               />
             </div>
