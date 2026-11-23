@@ -70,6 +70,25 @@ src/
 
 ---
 
+## 🎨 Sistema de Diseño Neo-Brutalista (Design System Mandate)
+
+Todo el ecosistema visual de Despacha Fácil sigue un estándar estricto de **Neo-Brutalismo / Editorial Brutalism** para garantizar alta conversión, identidad única y ergonomía móvil:
+
+* **Directrices y Componentes:** Documentado exhaustivamente en [.agents/skills/despacha-facil-design-system/SKILL.md](.agents/skills/despacha-facil-design-system/SKILL.md) y [AGENTS.md](AGENTS.md).
+* **Colores Semánticos:** Crema `#FAF8F5` (`bg-paper`), Tinta `#09090B` (`text-ink`, `border-ink`), Naranja Eléctrico `#FFA800` (`bg-brand-orange`), Coral `#F56917` (`bg-brand-coral`) y Menta `#34C9A8` (`bg-teal`).
+* **Tipografías Oficiales:**
+  * Titulares: `Dela Gothic One` (`font-display uppercase tracking-tight`).
+  * Interfaz y Controles: `Space Grotesk` (`font-body font-bold` o `font-medium`).
+  * Códigos y SKUs: `Geist Mono` (`font-mono text-xs`).
+* **Sombras Duras:** Prohibidas sombras difusas (`shadow-md`). Se usan sombras sólidas negras `shadow-hard-sm` (2px), `shadow-hard` (4px) y `shadow-hard-lg` (8px), con traslación táctil física en clic (`active:translate-x-[2px] active:translate-y-[2px] active:shadow-none`).
+* **Reglas Móviles (Android / Honor 200 Smart):**
+  * Títulos y CTAs alineados a la izquierda (`text-left items-start`).
+  * Espaciado vertical seguro (`pt-10 sm:pt-12`) bajo barras de navegación fijas.
+  * Códigos y corchetes numéricos protegidos con `shrink-0 whitespace-nowrap` (`[01]`).
+  * Apilamiento responsivo de tarjetas (`relative -mt-6 sm:absolute`).
+
+---
+
 ## 🌿 Flujo de Trabajo GitFlow
 
 Trabajamos con la metodología **GitFlow** estricta para garantizar orden, estabilidad y revisiones de código eficientes:
