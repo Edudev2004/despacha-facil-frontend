@@ -7,18 +7,18 @@ import { ArrowRight, Zap, ShieldCheck } from "lucide-react";
 
 export function HeroSection() {
   return (
-    <section className="px-4 sm:px-6 md:px-8 pt-6 sm:pt-10 md:pt-12 pb-24 sm:pb-28 lg:pb-16 max-w-7xl mx-auto">
+    <section className="px-4 sm:px-6 md:px-8 pt-10 sm:pt-12 md:pt-14 pb-20 sm:pb-28 lg:pb-16 max-w-7xl mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
-        {/* Left Column (Desktop) / Top Section (Mobile & Tablet): Centered on < lg, Left-aligned on lg: */}
-        <div className="w-full lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left mx-auto lg:mx-0 pr-0 lg:pr-4 xl:pr-8 max-w-2xl lg:max-w-none">
+        {/* Left Column (Desktop) / Top Section (Mobile & Tablet): Left-aligned on mobile per user request */}
+        <div className="w-full lg:col-span-7 flex flex-col items-start text-left mx-auto lg:mx-0 pr-0 lg:pr-4 xl:pr-8 max-w-2xl lg:max-w-none">
           {/* Sticker Badge: Pill-shaped, rotated -2 deg, #34C9A8 background, 2px solid #09090B border */}
-          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 rounded-full border-2 border-ink bg-teal text-ink text-[11px] sm:text-xs md:text-sm font-bold font-body uppercase tracking-wider shadow-hard-sm -rotate-2 mb-4 sm:mb-6">
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 rounded-full border-2 border-ink bg-teal text-ink text-[11px] sm:text-xs md:text-sm font-bold font-body uppercase tracking-wider shadow-hard-sm -rotate-2 mt-2 sm:mt-0 mb-5 sm:mb-6 self-start">
             <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-ink flex-shrink-0" />
             <span>APARTADO AUTOMÁTICO DE PRENDAS // CERO SOBREVENTAS</span>
           </div>
 
           {/* Display Text in Dela Gothic One with Glitch on hover */}
-          <h1 className="w-full font-display uppercase tracking-tighter text-ink text-4xl sm:text-5xl md:text-6xl lg:text-[4.6rem] xl:text-[5.4rem] leading-[0.92] glitch-hover select-none text-center lg:text-left">
+          <h1 className="w-full font-display uppercase tracking-tighter text-ink text-4xl sm:text-5xl md:text-6xl lg:text-[4.6rem] xl:text-[5.4rem] leading-[0.92] glitch-hover select-none text-left">
             VENDE MÁS<br />
             <span className="bg-brand-orange text-ink px-3 sm:px-4 py-0.5 sm:py-1 border-3 sm:border-4 border-ink inline-block my-2 shadow-hard">
               SIN CAOS
@@ -27,12 +27,12 @@ export function HeroSection() {
           </h1>
 
           {/* Subtitle in Space Grotesk */}
-          <p className="w-full mt-6 sm:mt-8 text-sm sm:text-base md:text-lg text-ink font-medium max-w-xl leading-relaxed text-center lg:text-left mx-auto lg:mx-0">
+          <p className="w-full mt-6 sm:mt-8 text-sm sm:text-base md:text-lg text-ink font-medium max-w-xl leading-relaxed text-left mx-0">
             El catálogo web móvil que aparta las prendas en tiempo real cuando tu cliente hace su pedido. Te pagan por Yape o Plin y organizas tus envíos de Olva Courier o Shalom sin enredos ni confusiones.
           </p>
 
           {/* CTAs */}
-          <div className="w-full mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3.5 sm:gap-4 sm:w-auto">
+          <div className="w-full mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3.5 sm:gap-4 sm:w-auto">
             {/* Hard-Shadow Button (Special Component) */}
             <Link
               href="/registro"
@@ -52,7 +52,7 @@ export function HeroSection() {
           </div>
 
           {/* Quick micro proof */}
-          <div className="w-full mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-3.5 gap-y-1.5 text-[11px] sm:text-xs font-mono font-bold text-ink/80 text-center">
+          <div className="w-full mt-6 flex flex-wrap items-center justify-start gap-x-3.5 gap-y-1.5 text-[11px] sm:text-xs font-mono font-bold text-ink/80 text-left">
             <span>✓ SIN TARJETA</span>
             <span>•</span>
             <span>✓ LISTO EN 3 MIN</span>
@@ -61,8 +61,8 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Right Column / Demo Card: Centered nicely below text on mobile/tablet */}
-        <div className="w-full lg:col-span-5 relative mt-10 sm:mt-14 lg:mt-0 flex justify-center max-w-sm sm:max-w-md mx-auto">
+        {/* Right Column / Demo Card: Stacked cleanly on mobile without covering content */}
+        <div className="w-full lg:col-span-5 relative mt-10 sm:mt-14 lg:mt-0 flex flex-col items-center sm:block max-w-sm sm:max-w-md mx-auto">
           {/* Primary Image Card: 32px border-radius, #09090B border */}
           <div className="relative w-full aspect-[4/5] rounded-[24px] sm:rounded-[32px] border-4 border-ink bg-[#09090B] p-5 sm:p-6 flex flex-col justify-between overflow-hidden shadow-hard-lg">
             {/* Background Texture Overlay */}
@@ -89,16 +89,16 @@ export function HeroSection() {
 
             {/* Mockup Centerpiece */}
             <div className="relative z-10 my-auto text-center p-2 sm:p-4">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-[16px] sm:rounded-[20px] bg-brand-orange border-2 border-ink grid place-items-center shadow-hard text-3xl sm:text-4xl mb-3 sm:mb-4">
+              <div className="w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-[16px] sm:rounded-[20px] bg-brand-orange border-2 border-ink grid place-items-center shadow-hard text-2xl sm:text-4xl mb-2 sm:mb-4">
                 🧥
               </div>
-              <h3 className="font-display text-xl sm:text-2xl text-white uppercase tracking-tight">
+              <h3 className="font-display text-lg sm:text-2xl text-white uppercase tracking-tight">
                 CASACA TÉRMICA
               </h3>
-              <p className="font-body text-[11px] sm:text-xs text-white/70 mt-1">
+              <p className="font-body text-[10px] sm:text-xs text-white/70 mt-0.5 sm:mt-1">
                 COLECCIÓN INVIERNO · TALLAS S / M / L
               </p>
-              <div className="mt-3 sm:mt-4 inline-block bg-teal text-ink font-display text-lg sm:text-xl px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-[8px] border-2 border-ink shadow-hard-sm">
+              <div className="mt-2.5 sm:mt-4 inline-block bg-teal text-ink font-display text-base sm:text-xl px-3 sm:px-4 py-1 sm:py-1.5 rounded-[8px] border-2 border-ink shadow-hard-sm">
                 S/ 139.00
               </div>
             </div>
@@ -110,8 +110,8 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Floating Asset Card: Centered-aligned on mobile, clean overlap on tablet and desktop */}
-          <div className="absolute -bottom-6 sm:-bottom-8 -left-2 sm:-left-6 md:-left-8 z-20 w-[94%] sm:w-64 max-w-[280px] rounded-[18px] sm:rounded-[20px] border-2 border-ink bg-teal p-3.5 sm:p-4 shadow-hard-lg animate-float text-left">
+          {/* Floating Asset Card: On mobile stacks right below with -mt-6 overlap, on sm+ floats absolutely */}
+          <div className="relative sm:absolute -mt-6 sm:mt-0 sm:-bottom-8 sm:-left-6 md:-left-8 z-20 w-[92%] sm:w-64 max-w-[300px] sm:max-w-[280px] rounded-[18px] sm:rounded-[20px] border-2 border-ink bg-teal p-3.5 sm:p-4 shadow-hard-lg animate-float text-left self-center sm:self-auto">
             <div className="flex items-center gap-2 pb-1.5 sm:pb-2 border-b-2 border-ink font-display text-[11px] sm:text-xs text-ink uppercase">
               <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>PRENDA RESERVADA</span>
