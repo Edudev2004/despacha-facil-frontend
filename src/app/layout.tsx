@@ -57,6 +57,12 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
+        url: "/og-image-square.png",
+        width: 800,
+        height: 800,
+        alt: "Despacha Fácil — SaaS de Catálogos & Despachos",
+      },
+      {
         url: "/og-image.png",
         width: 1200,
         height: 630,
@@ -127,7 +133,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const gaMeasurementId =
+    process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-LVCSNBYSMK";
 
   return (
     <html lang="es">
