@@ -18,12 +18,9 @@ export const metadata: Metadata = {
   description:
     "El SaaS que elimina sobreventas por WhatsApp y organiza tus despachos con reserva atómica en tiempo real.",
   icons: {
-    icon: [
-      { url: "/favicon.ico" },
-      { url: "/df-isotipo.webp", type: "image/webp" },
-    ],
-    shortcut: "/favicon.ico",
-    apple: "/df-isotipo.webp",
+    icon: "/favicon.ico?v=2",
+    shortcut: "/favicon.ico?v=2",
+    apple: "/favicon.ico?v=2",
   },
 };
 
