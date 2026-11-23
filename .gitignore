@@ -30,8 +30,8 @@ yarn-error.log*
 .env*.local
 
 # private docs
-.agents/
 *.docx
+.agents/*.docx
 
 # vercel
 .vercel
