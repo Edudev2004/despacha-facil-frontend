@@ -57,25 +57,19 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og-image-square.png",
-        width: 800,
-        height: 800,
-        alt: "Despacha Fácil — SaaS de Catálogos & Despachos",
-      },
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Despacha Fácil — SaaS de Catálogos & Despachos",
+        url: "/perfil.png",
+        width: 1121,
+        height: 1121,
+        alt: "Despacha Fácil",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Despacha Fácil — Vende Más Sin Caos",
     description:
       "Catálogo web móvil, pedidos a WhatsApp y control de despachos para tiendas de ropa en Perú.",
-    images: ["/og-image.png"],
+    images: ["/perfil.png"],
   },
   robots: {
     index: true,
