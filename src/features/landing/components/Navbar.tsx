@@ -21,10 +21,10 @@ export function Navbar() {
   }, [isOpen]);
 
   const navLinks = [
-    { href: "#features", label: "CÓMO FUNCIONA", code: "[ 01 ]" },
-    { href: "#drops", label: "CATÁLOGO EN VIVO", code: "[ 02 ]" },
-    { href: "#pricing", label: "PLANES TRANSPARENTES", code: "[ 03 ]" },
-    { href: "#info", label: "INFORMACIÓN & REDES", code: "[ 04 ]" },
+    { href: "#features", label: "CÓMO FUNCIONA", code: "[01]" },
+    { href: "#drops", label: "CATÁLOGO EN VIVO", code: "[02]" },
+    { href: "#pricing", label: "PLANES TRANSPARENTES", code: "[03]" },
+    { href: "#info", label: "INFORMACIÓN & REDES", code: "[04]" },
   ];
 
   const handleLinkClick = () => {
@@ -125,12 +125,12 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 onClick={handleLinkClick}
-                className="group flex items-baseline gap-3 text-2xl sm:text-4xl font-display uppercase tracking-tight text-ink hover:text-brand-orange transition-colors"
+                className="group flex items-start gap-3 text-xl sm:text-3xl md:text-4xl font-display uppercase tracking-tight text-ink hover:text-brand-orange transition-colors"
               >
-                <span className="font-mono text-xs sm:text-sm text-teal font-bold">
+                <span className="font-mono text-xs sm:text-sm text-teal font-bold shrink-0 whitespace-nowrap pt-1">
                   {item.code}
                 </span>
-                <span>{item.label}</span>
+                <span className="leading-tight">{item.label}</span>
               </a>
             ))}
           </nav>
