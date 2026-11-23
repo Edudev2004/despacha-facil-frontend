@@ -1,27 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --paper: #FAF8F5;
+  --ink: #09090B;
+  --acid: #FFA800;
+  --brand-orange: #FFA800;
+  --brand-coral: #F56917;
+  --brand-teal: #34C9A8;
+  --font-display: 'Dela Gothic One', cursive, sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  cursor: default;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Hide scrollbars for horizontal containers */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Neo-Brutalist Hard Shadows */
+.shadow-hard-sm {
+  box-shadow: 2px 2px 0px 0px #09090B;
+}
+
+.shadow-hard {
+  box-shadow: 4px 4px 0px 0px #09090B;
+}
+
+.shadow-hard-lg {
+  box-shadow: 8px 8px 0px 0px #09090B;
+}
+
+.shadow-hard-acid {
+  box-shadow: 4px 4px 0px 0px #D2E823;
+}
+
+.shadow-hard-lg-acid {
+  box-shadow: 8px 8px 0px 0px #D2E823;
+}
+
+/* Glitch Text Keyframe Effect */
+@keyframes glitch-anim {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+
+.glitch-hover:hover {
+  animation: glitch-anim 0.3s infinite;
+}
+
+/* Dot Pattern Texture (1px dots every 20px) */
+.dot-pattern {
+  background-image: radial-gradient(#09090B 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.dot-pattern-light {
+  background-image: radial-gradient(rgba(248, 244, 232, 0.25) 1px, transparent 1px);
+  background-size: 20px 20px;
 }

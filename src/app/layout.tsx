@@ -17,6 +17,11 @@ export const metadata: Metadata = {
   title: "Despacha Fácil — SaaS de Catálogos & Despachos para Redes Sociales",
   description:
     "El SaaS que elimina sobreventas por WhatsApp y organiza tus despachos con reserva atómica en tiempo real.",
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({
