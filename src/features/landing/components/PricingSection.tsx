@@ -6,7 +6,7 @@ import { Check, Sparkles } from "lucide-react";
 
 export function PricingSection() {
   return (
-    <section id="pricing" className="py-20 px-4 md:px-8 max-w-7xl mx-auto">
+    <section id="pricing" className="py-16 sm:py-20 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto scroll-mt-24">
       <div className="text-center max-w-2xl mx-auto mb-16">
         <div className="inline-block px-3 py-1 bg-acid text-ink text-xs font-mono font-bold uppercase rounded-[6px] border-2 border-ink mb-3 shadow-hard-sm">
           {"// PLANES TRANSPARENTES"}
@@ -71,7 +71,7 @@ export function PricingSection() {
                 <div className="w-5 h-5 rounded-full bg-teal border border-ink grid place-items-center flex-shrink-0">
                   <Check className="w-3.5 h-3.5 text-ink stroke-[3]" />
                 </div>
-                <span>Reserva atómica de stock (14ms)</span>
+                <span>Apartado automático de prendas (cero sobreventas)</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <div className="w-5 h-5 rounded-full bg-teal border border-ink grid place-items-center flex-shrink-0">

@@ -74,10 +74,10 @@ export function NewDropsSection() {
   };
 
   return (
-    <section id="drops" className="py-20 border-t-4 border-ink bg-paper">
-      <div className="px-4 md:px-8 max-w-7xl mx-auto">
+    <section id="drops" className="py-16 sm:py-20 border-t-4 border-ink bg-paper scroll-mt-24">
+      <div className="px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
         {/* Header with Arrow Navigation */}
-        <div className="flex items-end justify-between mb-10">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
           <div>
             <div className="inline-block px-3 py-1 bg-acid text-ink text-xs font-mono font-bold uppercase rounded-[6px] border-2 border-ink mb-3 shadow-hard-sm">
               {"// EXPERIENCIA EN VIVO"}
@@ -91,7 +91,7 @@ export function NewDropsSection() {
           </div>
 
           {/* Navigation Arrows */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 self-end sm:self-auto">
             <button
               onClick={() => scroll("left")}
               aria-label="Anterior drop"

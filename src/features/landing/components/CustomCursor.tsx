@@ -56,7 +56,7 @@ export function CustomCursor() {
 
   return (
     <div
-      className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full hidden md:block"
+      className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full hidden lg:block"
       style={{
         width: "32px",
         height: "32px",

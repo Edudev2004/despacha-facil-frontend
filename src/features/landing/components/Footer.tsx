@@ -18,8 +18,8 @@ export function Footer() {
   };
 
   return (
-    <footer id="info" className="w-full bg-[#09090B] text-[#F8F4E8] pt-20 pb-12 border-t-4 border-ink">
-      <div className="px-4 md:px-8 max-w-7xl mx-auto">
+    <footer id="info" className="w-full bg-[#09090B] text-[#F8F4E8] pt-16 sm:pt-20 pb-12 border-t-4 border-ink scroll-mt-24">
+      <div className="px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
         {/* Top Section: Newsletter and Brand Intro */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-16 border-b border-white/20">
           <div className="lg:col-span-6 space-y-4">
@@ -75,7 +75,7 @@ export function Footer() {
           {/* Column 1: Store */}
           <div className="space-y-4">
             <span className="font-mono text-xs uppercase tracking-widest text-acid block">
-              [ 01 // STORE & PRODUCT ]
+              [ 01 // BENEFICIOS & VENTAS ]
             </span>
             <ul className="space-y-2.5 font-body text-sm font-semibold uppercase tracking-wide">
               <li>
@@ -85,7 +85,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="#features" className="text-paper/80 hover:text-acid transition-colors">
-                  Reserva Atómica de Stock
+                  Apartado Automático de Stock
                 </Link>
               </li>
               <li>
@@ -95,7 +95,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="#features" className="text-paper/80 hover:text-acid transition-colors">
-                  Tablero Kanban Olva / Shalom
+                  Organizador de Envíos Olva / Shalom
                 </Link>
               </li>
               <li>
@@ -110,23 +110,23 @@ export function Footer() {
           {/* Column 2: Info */}
           <div className="space-y-4">
             <span className="font-mono text-xs uppercase tracking-widest text-acid block">
-              [ 02 // INFO & ARQUITECTURA ]
+              [ 02 // PLATAFORMA & SOPORTE ]
             </span>
             <ul className="space-y-2.5 font-body text-sm font-semibold uppercase tracking-wide">
               <li>
-                <span className="text-paper/80">Latencia: 14ms PostgreSQL</span>
+                <span className="text-paper/80">Para Tiendas de Ropa y Emprendedores</span>
               </li>
               <li>
-                <span className="text-paper/80">SLA Disponibilidad: 99.9%</span>
+                <span className="text-paper/80">Funciona 24/7 en tus transmisiones en vivo</span>
               </li>
               <li>
-                <span className="text-paper/80">Soporte WhatsApp 24/7</span>
+                <span className="text-paper/80">Soporte por WhatsApp en Perú</span>
               </li>
               <li>
-                <span className="text-paper/80">Seguridad Multi-Tenant</span>
+                <span className="text-paper/80">Panel privado y seguro para tu negocio</span>
               </li>
               <li>
-                <span className="text-paper/80">Diseñado en Perú para LATAM</span>
+                <span className="text-paper/80">Optimizado para Olva, Shalom, Yape y Plin</span>
               </li>
             </ul>
           </div>
