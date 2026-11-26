@@ -413,6 +413,33 @@ export function DFInput({ label, error, className = "", ...props }: InputProps) 
 }
 ```
 
+### Blueprint 6: Auth / Login & Onboarding Layout
+```tsx
+// Fondo .dot-pattern sobre #FAF8F5, tarjeta blanca centrada con border-3 border-ink y shadow-hard-lg.
+// Sticker superior rotado (-rotate-2) en bg-teal o bg-brand-orange indicando módulo ("ACCESO COMERCIOS").
+// Títulos con font-display uppercase; inputs con prefijo "// EMAIL" y "// CONTRASEÑA".
+// Botón principal ancho completo con DFButton / Button variant="primary" (bg-ink text-brand-orange shadow-hard).
+```
+
+### Blueprint 7: Merchant Dashboard App Shell (Sidebar + Topbar + Mobile Nav)
+```tsx
+// Desktop (lg+): Sidebar fija w-64 bg-paper border-r-2 border-ink.
+// Topbar: h-16 bg-white border-b-2 border-ink con nombre/slug de tienda, badge LIVE en bg-teal y botón rápido "+ POS RÁPIDO".
+// Ítems de navegación: flex items-center gap-3 px-3.5 py-2.5 rounded-[10px] border-2 font-body font-bold text-sm uppercase.
+//   - Ítem activo: bg-brand-orange text-ink border-ink shadow-hard-sm.
+//   - Ítem inactivo: border-transparent text-ink/80 hover:bg-white hover:border-ink.
+//   - Número de módulo: <span className="font-mono text-xs font-bold shrink-0 whitespace-nowrap">[01]</span>.
+// Mobile (< lg): Topbar compacta con botón hamburguesa border-2 border-ink shadow-hard-sm que abre el mismo drawer de la landing.
+```
+
+### Blueprint 8: Data Tables & Modals Neo-Brutalistas
+```tsx
+// Tablas: Contenedor rounded-[16px] border-2 border-ink bg-white shadow-hard overflow-hidden.
+// Cabecera <thead>: bg-paper border-b-2 border-ink font-mono text-xs font-bold uppercase tracking-wider text-ink.
+// Filas <tr>: border-b border-ink/15 hover:bg-paper/60 transition-colors.
+// Modales / Drawers: Overlay bg-ink/60 (sin blur excesivo), panel bg-white border-3 border-ink rounded-[20px] shadow-hard-lg.
+```
+
 ---
 
 ## 6. Verification Checklist Before Shipping Any Screen

@@ -3,7 +3,7 @@ import { cn } from "@/shared/lib/utils";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "ghost" | "danger";
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "danger" | "whatsapp";
   size?: "sm" | "md" | "lg";
   isLoading?: boolean;
 }
@@ -22,24 +22,27 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium transition-all duration-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]";
+      "inline-flex items-center justify-center font-body font-bold uppercase tracking-wider transition-all duration-150 rounded-[12px] border-2 border-ink focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed select-none active:translate-x-[2px] active:translate-y-[2px] active:shadow-none whitespace-nowrap";
 
     const variants = {
       primary:
-        "bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 focus:ring-emerald-500",
+        "bg-ink text-brand-orange shadow-hard hover:bg-brand-orange hover:text-ink hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-hard-sm",
       secondary:
-        "bg-zinc-800 hover:bg-zinc-700 text-white focus:ring-zinc-600",
+        "bg-paper text-ink shadow-hard hover:bg-teal hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-hard-sm",
       outline:
-        "border border-zinc-700 hover:bg-zinc-800 text-zinc-200 focus:ring-zinc-500",
-      ghost: "text-zinc-300 hover:bg-zinc-800/60 focus:ring-zinc-600",
+        "bg-white text-ink shadow-hard-sm hover:bg-paper",
+      ghost:
+        "border-transparent bg-transparent text-ink hover:bg-ink/5 shadow-none",
       danger:
-        "bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/25 focus:ring-rose-500",
+        "bg-brand-coral text-white shadow-hard hover:bg-ink hover:text-brand-coral",
+      whatsapp:
+        "bg-[#25D366] text-ink shadow-hard hover:bg-[#20ba59]",
     };
 
     const sizes = {
-      sm: "text-xs px-3 py-1.5 gap-1.5",
-      md: "text-sm px-4 py-2.5 gap-2",
-      lg: "text-base px-6 py-3.5 gap-2.5",
+      sm: "text-xs px-3 py-2 gap-1.5 rounded-[8px]",
+      md: "text-sm px-5 py-3 gap-2",
+      lg: "text-base px-6 py-4 gap-2.5",
     };
 
     return (
@@ -51,7 +54,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLoading && (
           <svg
-            className="animate-spin -ml-1 mr-2 h-4 w-4 text-current"
+            className="animate-spin -ml-1 mr-1.5 h-4 w-4 text-current"
             fill="none"
             viewBox="0 0 24 24"
           >
