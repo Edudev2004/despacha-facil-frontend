@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, XCircle, Loader2, Sparkles, AlertTriangle } from "lucide-react";
 import { Button } from "@/shared/components/ui/Button";
 import { Input } from "@/shared/components/ui/Input";
+import { LatamPhoneInput, LATAM_COUNTRIES, type LatamCountry } from "@/shared/components/ui/LatamPhoneInput";
 import { apiClient } from "@/shared/lib/apiClient";
 import type { RegisterTenantInput, UserSession } from "../types/auth.types";
 
@@ -16,7 +17,9 @@ interface SlugCheckResult {
 export function RegisterForm() {
   const [storeName, setStoreName] = useState("");
   const [slug, setSlug] = useState("");
-  const [whatsappNumber, setWhatsappNumber] = useState("");
+  const [phoneE164, setPhoneE164] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState<LatamCountry>(LATAM_COUNTRIES[0]);
+  const [nationalPhone, setNationalPhone] = useState("");
   const [adminFullName, setAdminFullName] = useState("");
   const [adminEmail, setAdminEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -70,18 +73,51 @@ export function RegisterForm() {
 
   const validate = () => {
     const errs: Record<string, string> = {};
-    if (!storeName.trim()) errs.storeName = "INGRESA EL NOMBRE COMERCIAL DE TU MARCA";
-    if (!slug || slug.length < 3) errs.slug = "EL SUBDOMINIO DEBE TENER AL MENOS 3 CARACTERES";
-    if (slugStatus === "unavailable") errs.slug = "ESTE SUBDOMINIO YA ESTÁ OCUPADO. ELIGE OTRO";
-    if (!whatsappNumber.trim() || whatsappNumber.replace(/\D/g, "").length < 9) {
-      errs.whatsappNumber = "INGRESA UN NÚMERO DE WHATSAPP VÁLIDO (EJ. 987654321)";
+
+    // 1. Nombre Comercial
+    if (!storeName.trim() || storeName.trim().length < 3) {
+      errs.storeName = "Ingresa el nombre comercial de tu marca (mínimo 3 letras)";
     }
-    if (!adminFullName.trim()) errs.adminFullName = "INGRESA TU NOMBRE Y APELLIDO";
-    if (!adminEmail.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(adminEmail)) {
-      errs.adminEmail = "INGRESA UN CORREO VÁLIDO (EJ. DUEÑO@MARCA.PE)";
+
+    // 2. Slug
+    const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+    if (!slug || slug.length < 3) {
+      errs.slug = "El subdominio debe tener al menos 3 caracteres";
+    } else if (!slugRegex.test(slug)) {
+      errs.slug = "Solo permite letras minúsculas, números y guiones medios";
+    } else if (slugStatus === "unavailable") {
+      errs.slug = "Este subdominio ya está ocupado. Elige otro";
     }
-    if (!password || password.length < 6) {
-      errs.password = "LA CONTRASEÑA DEBE TENER AL MENOS 6 CARACTERES";
+
+    // 3. Teléfono / WhatsApp con validación estricta según país LATAM
+    if (!nationalPhone || nationalPhone.length === 0) {
+      errs.whatsappNumber = "El número de WhatsApp es obligatorio";
+    } else if (nationalPhone.length !== selectedCountry.digits) {
+      errs.whatsappNumber = `Para ${selectedCountry.name} debe tener exactamente ${selectedCountry.digits} dígitos`;
+    } else if (!selectedCountry.pattern.test(nationalPhone)) {
+      errs.whatsappNumber = `Número inválido para ${selectedCountry.name}. Ejemplo: ${selectedCountry.example}`;
+    }
+
+    // 4. Nombre completo del admin (nombre + apellido)
+    const nameParts = adminFullName.trim().split(/\s+/);
+    if (!adminFullName.trim() || nameParts.length < 2) {
+      errs.adminFullName = "Ingresa tu nombre y al menos un apellido";
+    }
+
+    // 5. Correo electrónico estricto
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!adminEmail.trim()) {
+      errs.adminEmail = "El correo electrónico es obligatorio";
+    } else if (!emailRegex.test(adminEmail.trim())) {
+      errs.adminEmail = "Ingresa un correo electrónico válido (ej. tu@marca.pe)";
+    }
+
+    // 6. Contraseña fuerte (mínimo 8 caracteres, al menos una letra y un número)
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+    if (!password) {
+      errs.password = "La contraseña es obligatoria";
+    } else if (!passwordRegex.test(password)) {
+      errs.password = "Mínimo 8 caracteres, incluyendo al menos una letra y un número";
     }
 
     setFieldErrors(errs);
@@ -99,9 +135,9 @@ export function RegisterForm() {
       const payload: RegisterTenantInput = {
         storeName: storeName.trim(),
         slug: slug.trim(),
-        whatsappNumber: whatsappNumber.trim(),
+        whatsappNumber: phoneE164 || `${selectedCountry.dialCode}${nationalPhone}`,
         adminFullName: adminFullName.trim(),
-        adminEmail: adminEmail.trim(),
+        adminEmail: adminEmail.trim().toLowerCase(),
         password,
         businessType: "RETAIL",
       };
@@ -178,14 +214,20 @@ export function RegisterForm() {
           </div>
         </div>
 
-        <Input
-          label="WHATSAPP DE VENTAS"
-          name="whatsappNumber"
-          placeholder="987654321"
-          value={whatsappNumber}
-          onChange={(e) => setWhatsappNumber(e.target.value)}
+        {/* Latam Phone Input */}
+        <LatamPhoneInput
+          label="WHATSAPP DE VENTAS (LATAM)"
+          value={phoneE164}
+          onChange={(fullE164, country, national) => {
+            setPhoneE164(fullE164);
+            setSelectedCountry(country);
+            setNationalPhone(national);
+            if (fieldErrors.whatsappNumber) {
+              setFieldErrors((prev) => ({ ...prev, whatsappNumber: "" }));
+            }
+          }}
           error={fieldErrors.whatsappNumber}
-          hint="Para recibir pedidos y vouchers directamente."
+          hint={`Formato estándar internacional (${selectedCountry.name}: ${selectedCountry.dialCode}) para recibir pedidos directos.`}
         />
       </div>
 
@@ -200,7 +242,10 @@ export function RegisterForm() {
           name="adminFullName"
           placeholder="Carlos Navarro"
           value={adminFullName}
-          onChange={(e) => setAdminFullName(e.target.value)}
+          onChange={(e) => {
+            setAdminFullName(e.target.value);
+            if (fieldErrors.adminFullName) setFieldErrors((prev) => ({ ...prev, adminFullName: "" }));
+          }}
           error={fieldErrors.adminFullName}
         />
 
@@ -210,17 +255,23 @@ export function RegisterForm() {
           type="email"
           placeholder="carlos@modasnavarro.pe"
           value={adminEmail}
-          onChange={(e) => setAdminEmail(e.target.value)}
+          onChange={(e) => {
+            setAdminEmail(e.target.value);
+            if (fieldErrors.adminEmail) setFieldErrors((prev) => ({ ...prev, adminEmail: "" }));
+          }}
           error={fieldErrors.adminEmail}
         />
 
         <Input
-          label="CONTRASEÑA (MÍNIMO 6 CARACTERES)"
+          label="CONTRASEÑA (MÍNIMO 8 CARACTERES, LETRAS Y NÚMEROS)"
           name="password"
           type="password"
           placeholder="••••••••"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            if (fieldErrors.password) setFieldErrors((prev) => ({ ...prev, password: "" }));
+          }}
           error={fieldErrors.password}
         />
       </div>
