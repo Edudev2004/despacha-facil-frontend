@@ -23,6 +23,7 @@ export function RegisterForm() {
   const [adminFullName, setAdminFullName] = useState("");
   const [adminEmail, setAdminEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [slugStatus, setSlugStatus] = useState<"idle" | "checking" | "available" | "unavailable">("idle");
   const [isManualSlug, setIsManualSlug] = useState(false);
@@ -118,6 +119,13 @@ export function RegisterForm() {
       errs.password = "La contraseña es obligatoria";
     } else if (!passwordRegex.test(password)) {
       errs.password = "Mínimo 8 caracteres, incluyendo al menos una letra y un número";
+    }
+
+    // 7. Confirmar contraseña
+    if (!confirmPassword) {
+      errs.confirmPassword = "Debes confirmar tu contraseña";
+    } else if (password !== confirmPassword) {
+      errs.confirmPassword = "Las contraseñas no coinciden";
     }
 
     setFieldErrors(errs);
@@ -269,11 +277,50 @@ export function RegisterForm() {
           placeholder="••••••••"
           value={password}
           onChange={(e) => {
-            setPassword(e.target.value);
+            const val = e.target.value;
+            setPassword(val);
             if (fieldErrors.password) setFieldErrors((prev) => ({ ...prev, password: "" }));
+            if (confirmPassword && val !== confirmPassword) {
+              setFieldErrors((prev) => ({ ...prev, confirmPassword: "Las contraseñas no coinciden" }));
+            } else if (confirmPassword && val === confirmPassword) {
+              setFieldErrors((prev) => ({ ...prev, confirmPassword: "" }));
+            }
           }}
           error={fieldErrors.password}
         />
+
+        <div className="text-left">
+          <Input
+            label="CONFIRMAR CONTRASEÑA"
+            name="confirmPassword"
+            type="password"
+            placeholder="••••••••"
+            value={confirmPassword}
+            onChange={(e) => {
+              const val = e.target.value;
+              setConfirmPassword(val);
+              if (password && val !== password) {
+                setFieldErrors((prev) => ({ ...prev, confirmPassword: "Las contraseñas no coinciden" }));
+              } else {
+                setFieldErrors((prev) => ({ ...prev, confirmPassword: "" }));
+              }
+            }}
+            error={fieldErrors.confirmPassword}
+          />
+          {confirmPassword && password && (
+            <div className="mt-1 flex items-center gap-1.5 text-[11px] font-mono">
+              {password === confirmPassword ? (
+                <span className="inline-flex items-center gap-1 text-emerald-600 font-bold">
+                  <CheckCircle2 className="w-3.5 h-3.5" /> ¡Las contraseñas coinciden!
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 text-brand-coral font-bold">
+                  <XCircle className="w-3.5 h-3.5" /> Las contraseñas no coinciden
+                </span>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="pt-2">
