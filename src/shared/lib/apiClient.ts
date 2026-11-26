@@ -1,8 +1,16 @@
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  (typeof window !== "undefined" && window.location.hostname === "localhost"
-    ? "http://localhost:8080"
-    : "https://api.despachafacil.com");
+function getApiBaseUrl(): string {
+  // Si estamos en el navegador
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    // Si corre en tu máquina o red local -> Backend local en 8080
+    if (host === "localhost" || host === "127.0.0.1" || host.startsWith("192.168.")) {
+      return "http://localhost:8080";
+    }
+  }
+
+  // Si está en producción (o SSR en servidor de producción)
+  return process.env.NEXT_PUBLIC_API_URL || "https://api.despachafacil.com";
+}
 
 interface FetchOptions extends RequestInit {
   tenantSlug?: string;
@@ -28,11 +36,13 @@ export async function apiClient<T>(
     requestHeaders["Authorization"] = `Bearer ${token}`;
   }
 
-  const url = `${API_BASE_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
+  const baseUrl = getApiBaseUrl();
+  const url = `${baseUrl}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
 
   try {
     const response = await fetch(url, {
       ...rest,
+      credentials: rest.credentials || "include",
       headers: requestHeaders,
     });
 
@@ -47,7 +57,7 @@ export async function apiClient<T>(
   } catch (error) {
     if (error instanceof TypeError && error.message.includes("fetch")) {
       throw new Error(
-        "No se pudo conectar con el servidor backend (revisa que el servicio esté activo en localhost:8080 o tu conexión a internet)."
+        "No se pudo conectar con el servidor. Por favor verifica tu conexión o intenta más tarde."
       );
     }
     throw error;
