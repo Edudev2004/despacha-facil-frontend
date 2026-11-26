@@ -40,10 +40,14 @@ export function LoginForm() {
 
     setIsLoading(true);
     try {
-      await apiClient<UserSession>("/api/v1/auth/login", {
+      const session = await apiClient<UserSession>("/api/v1/auth/login", {
         method: "POST",
         body: JSON.stringify({ email: email.trim(), password, rememberMe }),
       });
+      // Guardar sesión en localStorage para persistencia inmediata en el cliente
+      if (typeof window !== "undefined" && session) {
+        localStorage.setItem("df_user_session", JSON.stringify(session));
+      }
       // Redirect will happen once dashboard route & cookie session are wired
       window.location.href = "/dashboard";
     } catch (err) {
