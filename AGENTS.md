@@ -120,3 +120,29 @@ Todo controlador, servicio de negocio y filtro de seguridad DEBE implementar log
    * **`DEBUG`:** Payloads de entrada/salida, headers de autenticación, queries detalladas. Habilitado en local para desarrollo; deshabilitado en prod.
 3. **Frontend API Client:**
    * Toda petición desde el frontend debe incluir `credentials: "include"` para transmitir de manera segura las cookies HttpOnly (`df_token`).
+
+---
+
+## 6. Mandato de Imágenes: Optimización WebP y Cloudflare R2 ("Regla de Cero Sobrecosto")
+
+Toda funcionalidad, pantalla o módulo que involucre subida o gestión de imágenes (Sprint 1: Marca, Banner y QR Yape/Plin; Sprint 2: Catálogo y Fotos de Productos; Sprint 5: Comprobantes de Pago Yape/Plin) DEBE acatar estrictamente las siguientes reglas:
+
+1. **Conversión Obligatoria a WebP en el Navegador (`imageOptimizer.ts`):**
+   * Toda imagen DEBE convertirse a formato `.webp` directamente en el cliente (Browser Canvas) **antes** de enviarse al backend.
+   * **PROHIBICIÓN ESTRICTA:** Queda terminantemente prohibido subir imágenes crudas sin optimizar (archivos JPG/PNG pesados de 3MB a 12MB).
+   * **Límites de Resolución y Calidad:**
+     * **Logos y Códigos QR:** Máximo 600x600 px o 800x800 px (calidad 0.85, peso meta: ~20 KB – 50 KB).
+     * **Banners de Tienda & Lives:** Máximo 1400x450 px (calidad 0.85, peso meta: ~80 KB – 140 KB).
+     * **Fotos de Productos en Catálogo (Sprint 2):** Máximo 1080x1080 px (calidad 0.85, peso meta: ~70 KB – 120 KB).
+2. **Componente Estándar de Carga (`ImageUploader.tsx`):**
+   * Toda interfaz de carga de imágenes debe usar obligatoriamente el componente `ImageUploader` con diseño Neo-Brutalista (borde punteado negro, feedback táctil, indicador de ahorro de peso y fallback opcional de URL externa).
+3. **Almacenamiento en Cloudflare R2 con Aislamiento Tenant:**
+   * Las imágenes se almacenan exclusivamente en Cloudflare R2 bajo prefijos aislados:  
+     `tenants/{tenantId}/{folder}/{uuid}.webp`
+   * Cabecera obligatoria de caché de alto rendimiento: `CacheControl: public, max-age=31536000, immutable`.
+4. **Política de Cero Basura Huérfana (Purga Automática de Storage):**
+   * **Al eliminar:** Cuando un usuario haga clic en "Eliminar" en el frontend, el sistema DEBE invocar de inmediato `DELETE /api/v1/storage?url=...` para destruir físicamente el objeto en Cloudflare R2.
+   * **Al reemplazar:** Si el usuario sube una imagen nueva sobre un campo que ya tenía una imagen previa, el sistema DEBE purgar automáticamente el archivo antiguo de Cloudflare R2.
+   * **Al actualizar entidades en Backend:** Todo servicio de negocio (`TenantSettingsService`, `ProductService`, etc.) que modifique campos de imagen DEBE invocar `storageService.deleteFile(oldUrl)` para no dejar archivos huérfanos que consuman cuota o generen sobrecostos.
+   * **Aislamiento de Eliminación:** Un tenant solo puede eliminar archivos cuyo prefijo coincida estrictamente con su `tenantId` (`tenants/{tenantId}/...`).
+
