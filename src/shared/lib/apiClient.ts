@@ -12,6 +12,10 @@ function getApiBaseUrl(): string {
   return process.env.NEXT_PUBLIC_API_URL || "https://api.despachafacil.com";
 }
 
+interface ApiError extends Error {
+  status?: number;
+}
+
 interface FetchOptions extends RequestInit {
   tenantSlug?: string;
   token?: string;
@@ -48,9 +52,11 @@ export async function apiClient<T>(
 
     if (!response.ok) {
       const errorBody = await response.json().catch(() => ({}));
-      throw new Error(
+      const error: ApiError = new Error(
         errorBody.message || `Error en la petición: ${response.status} ${response.statusText}`
       );
+      error.status = response.status;
+      throw error;
     }
 
     return response.json();

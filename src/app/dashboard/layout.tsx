@@ -18,6 +18,23 @@ export default function DashboardLayout({
   useEffect(() => {
     let isMounted = true;
 
+    // 1. Carga inicial optimista desde localStorage si existe
+    let hasLocalSession = false;
+    try {
+      const saved = localStorage.getItem("df_user_session");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && parsed.email) {
+          setSession(parsed);
+          hasLocalSession = true;
+          setIsVerifying(false);
+        }
+      }
+    } catch {
+      // ignore
+    }
+
+    // 2. Validación de sesión con el backend
     async function verifyAndLoadSession() {
       try {
         const user = await apiClient<UserSession>("/api/v1/auth/me");
@@ -28,8 +45,11 @@ export default function DashboardLayout({
         } else {
           throw new Error("No session found");
         }
-      } catch {
-        if (isMounted) {
+      } catch (err: unknown) {
+        if (!isMounted) return;
+        const status = (err as { status?: number })?.status;
+        // Solo expulsar si el backend responde 401 explícito o si no había sesión local
+        if (status === 401 || !hasLocalSession) {
           localStorage.removeItem("df_user_session");
           window.location.replace("/login");
         }
