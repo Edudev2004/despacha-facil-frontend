@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { apiClient } from "@/shared/lib/apiClient";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -59,11 +60,11 @@ export function DashboardSidebar({
   const handleLogout = async () => {
     try {
       localStorage.removeItem("df_user_session");
-      await fetch("http://localhost:8080/api/v1/auth/logout", { credentials: "include", method: "POST" });
+      await apiClient("/api/v1/auth/logout", { method: "POST" });
     } catch {
       // ignore
     }
-    window.location.href = "/login";
+    window.location.replace("/login");
   };
 
   return (
