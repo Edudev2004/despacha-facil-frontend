@@ -109,7 +109,7 @@ export default function DashboardLayout({
                 </span>
               </div>
             </div>
-            <div className="w-10 h-10 rounded-[10px] bg-brand-orange border-2 border-ink grid place-items-center font-display text-ink text-sm shadow-hard-sm">
+            <div className="w-10 h-10 rounded-[10px] bg-black border-2 border-ink grid place-items-center font-display text-white text-sm shadow-hard-sm">
               {(session?.fullName || session?.tenantName || "DF").substring(0, 2).toUpperCase()}
             </div>
           </div>
