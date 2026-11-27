@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { DashboardSidebar } from "@/features/dashboard/components/DashboardSidebar";
 import { apiClient } from "@/shared/lib/apiClient";
 import type { UserSession } from "@/features/auth/types/auth.types";
+import { Loader2 } from "lucide-react";
 
 export default function DashboardLayout({
   children,
@@ -12,37 +13,40 @@ export default function DashboardLayout({
 }) {
   const [session, setSession] = useState<UserSession | null>(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(true);
 
   useEffect(() => {
-    // 1. Cargar de inmediato desde cache local para rendering instantáneo sin parpadeos
-    try {
-      const savedSession = localStorage.getItem("df_user_session");
-      if (savedSession) {
-        setSession(JSON.parse(savedSession));
-      }
-    } catch {
-      // ignore
-    }
+    let isMounted = true;
 
-    // 2. Sincronizar con el backend
-    async function loadSession() {
+    async function verifyAndLoadSession() {
       try {
         const user = await apiClient<UserSession>("/api/v1/auth/me");
-        if (user) {
+        if (user && isMounted) {
           setSession(user);
           localStorage.setItem("df_user_session", JSON.stringify(user));
+          setIsVerifying(false);
+        } else {
+          throw new Error("No session found");
         }
       } catch {
-        // En desarrollo local permite continuar mostrando datos por defecto
+        if (isMounted) {
+          localStorage.removeItem("df_user_session");
+          window.location.replace("/login");
+        }
       }
     }
-    loadSession();
+
+    verifyAndLoadSession();
 
     // Recuperar preferencia de colapso guardada en el navegador
     const saved = localStorage.getItem("df_sidebar_collapsed");
     if (saved === "true") {
       setIsCollapsed(true);
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const toggleCollapse = () => {
@@ -52,6 +56,23 @@ export default function DashboardLayout({
       return next;
     });
   };
+
+  // Mientras verifica el token activo con el backend, no exponer el dashboard
+  if (isVerifying) {
+    return (
+      <div className="min-h-screen bg-paper flex flex-col items-center justify-center p-4">
+        <div className="p-6 rounded-[16px] bg-white border-3 border-ink shadow-hard flex flex-col items-center gap-4 max-w-sm text-center">
+          <div className="w-12 h-12 rounded-[10px] bg-brand-orange border-2 border-ink grid place-items-center shadow-hard-sm">
+            <Loader2 className="w-6 h-6 text-ink animate-spin" />
+          </div>
+          <div>
+            <h3 className="font-display text-sm uppercase text-ink">Verificando Sesión Segura</h3>
+            <p className="font-mono text-xs text-ink/60 mt-1">Comprobando token activo con el servidor...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-paper flex flex-col lg:flex-row font-body text-ink selection:bg-brand-orange selection:text-ink">
