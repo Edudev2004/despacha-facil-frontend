@@ -2,6 +2,7 @@ export interface UserSession {
   userId: string;
   tenantId: string;
   tenantSlug: string;
+  tenantName?: string;
   fullName: string;
   email: string;
   role: "ROLE_ADMIN" | "ROLE_OPERATOR" | "ROLE_DISPATCHER";
